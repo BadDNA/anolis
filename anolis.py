@@ -80,13 +80,19 @@ def reMask(record):
             start, stop = pos
             #print starts, ends
             if not (starts.any() and ends.any()):
-                r_type = 'single'
+                if len(motif) == 4:
+                    r_type = 'tetra'
+                elif len(motif) == 3:
+                    r_type = 'tri'
                 starts = numpy.append(starts,start)
                 ends = numpy.append(ends,stop)
                 # uppercase msat
                 seq = seq[:start] + seq[start:stop].upper() + seq[stop:]
             elif (starts.any() and ends.any()) and (0 in start - ends or 0 in stop - starts):
-                r_type = 'compound'
+                if len(motif) == 4:
+                    r_type += '+tetra'
+                elif len(motif) == 3:
+                    r_type += '+tri'
                 starts = numpy.append(starts,start)
                 ends = numpy.append(ends,stop)
                 # uppercase msat
