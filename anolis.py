@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-untitled.py
+anolis.py
 
 Created by Brant Faircloth on 2009-10-15.
 Copyright (c) 2009 Brant Faircloth. All rights reserved.
@@ -66,9 +66,6 @@ def msatSearch(record, motifs):
     for search in motifs:
         microsatellite(record, search)
     return record
-
-def parseHeader(header):
-    pass
 
 def reMask(record):
     #pdb.set_trace()
@@ -138,8 +135,11 @@ def createTables(cur):
     cur.execute('''create table sequence (
     id integer primary key,
     seq_name text,
-    start int,
-    stop int,
+    seq_map text,
+    seq_start int,
+    seq_stop int,
+    rep_start int,
+    rep_stop int,
     rep_type text,
     rep_length int
     )''')
@@ -154,11 +154,15 @@ def createTables(cur):
     cur.execute('''create index idx_motifs_id on motifs(id)''')
     cur.execute('''create index idx_sequence_seq_name on sequence(seq_name)''')
 
-def insertData(cur, record, seq_index):
-    cur.execute('''insert into sequence (id, seq_name, start, stop, rep_type, 
-    rep_length) values (?,?,?,?,?,?)''', (seq_index, record.id, \
-    record.whole_begin, record.whole_end, record.whole_r_type, \
+def insertData(cur, record, info, seq_index):
+    cur.execute('''insert into sequence (id, seq_name, seq_map, seq_start,      
+    seq_stop, rep_start, rep_stop, rep_type, 
+    rep_length) values (?,?,?,?,?,?,?,?,?)''', (seq_index, record.id, \
+    info.map, \
+    info.start, info.stop, info.start + record.whole_begin, \
+    info.start + record.whole_end - 1, record.whole_r_type, \
     record.whole_end-record.whole_begin))
+    
     for motif in record.matches:
         m_len = len(motif)
         #pdb.set_trace()
@@ -168,9 +172,22 @@ def insertData(cur, record, seq_index):
             length = stop - start
             units = length/m_len
             cur.execute('''insert into motifs (id, motif, start, stop, units, 
-            length) values (?,?,?,?,?,?)''', (seq_index, motif, start, \
-            stop, units, length))
-    
+            length) values (?,?,?,?,?,?)''', (seq_index, motif, \
+            info.start + start, info.start + stop - 1, units, length))
+
+class SeqHeader():
+    """docstring for ClassName"""
+    def __init__(self, header, offset=799):
+        sh = header.split('_')
+        self.string     = header
+        self.scaffold   = '_'.join(sh[0:2])
+        self.start      = int(sh[2])-offset
+        self.stop       = int(sh[3])+offset+1
+        self.motif      = sh[4]
+        self.repeat     = sh[5]
+        self.length     = float(sh[6])
+        self.map        = ('%s:%s-%s') % (self.scaffold, self.start,\
+                            self.stop)
 
 def main():
     # create a database
@@ -182,13 +199,12 @@ def main():
     motifs = motifCollection(min_length = [10,6,8,8,8,8], scan_type = \
     "4+", perfect = True)
     seq_index = 0
-    out_handle = open('AnoCar_200RandomMSatLoci_Tetras_REMASK.fa', 'w')
+    out_handle = open('test_REMASK.fa', 'w')
     good_records = []
-    for record in SeqIO.parse(open('AnoCar_200RandomMSatLoci_Tetras.fa', 'rU')\
-    , 'fasta'):
+    for record in SeqIO.parse(open('test.fa','rU'), 'fasta'):
         if record.seq:record.skip = False
         # do something with header info
-        parseHeader(record.id)
+        info = SeqHeader(record.id)
         # find the msat(s)
         msatSearch(record, motifs)
         # we're just gonna cram all of the metrics we need into the sequence
@@ -201,7 +217,7 @@ def main():
         if not record.skip:
             flankDistance(record)
             if record.pre_len >= 25 and record.post_len >= 25:
-                insertData(cur, record, seq_index)
+                insertData(cur, record, info, seq_index)
                 conn.commit()
                 seq_index += 1
                 #pdb.set_trace()
