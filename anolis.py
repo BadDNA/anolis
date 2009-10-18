@@ -9,9 +9,12 @@ Copyright (c) 2009 Brant Faircloth. All rights reserved.
 
 import pdb
 import re
+import os
+import sys
 import msat
 import numpy
 import sqlite3
+import optparse
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.Alphabet import SingleLetterAlphabet
@@ -72,8 +75,6 @@ def reMask(record):
     # do some masking tricks
     seq = str(record.seq)
     starts, ends = numpy.array([]), numpy.array([])
-    #if record.id == 'scaffold_1621':
-    #    pdb.set_trace()
     for motif in record.matches:
         for occurrence in record.matches[motif]:
             pos = occurrence[0]
@@ -195,19 +196,55 @@ class SeqHeader():
         self.map        = ('%s:%s-%s') % (self.scaffold, self.start,\
                             self.stop)
 
+def sequenceCount(input):
+    '''Determine the number of sequence reads in the database'''
+    handle = open(input, 'rU')
+    lines = handle.read().count('>')
+    handle.close()
+    return lines
+
+def interface():
+    '''Command-line interface'''
+    usage = "usage: %prog [options]"
+
+    p = optparse.OptionParser(usage)
+
+    p.add_option('--input', '-i', dest = 'input', action='store', \
+type='string', default = None, help='The path to the input Fasta file.', \
+metavar='FILE')
+    p.add_option('--output', '-o', dest = 'output', action='store', \
+type='string', default = None, help='The path to the remasked/output Fasta file.', metavar='FILE')
+    p.add_option('--database', '-d', dest = 'database', action='store', \
+    type='string', default = None, help='The path to the storage database.', metavar='FILE')
+
+    (options,arg) = p.parse_args()
+    if not options.input:
+        p.print_help()
+        sys.exit(2)
+    if not os.path.isfile(options.input):
+        print "You must provide a valid path to the configuration file."
+        p.print_help()
+        sys.exit(2)
+    return options, arg
+
 def main():
+    options, args = interface()
+    # count lines in out input
+    s_count = sequenceCount(options.input)
+    print '%s sequences to be scanned' % s_count
     # create a database
-    conn = sqlite3.connect('anolis.sqlite')
+    conn = sqlite3.connect(options.database)
     cur = conn.cursor()
     createTables(cur)
     conn.commit()
     # create motifs only once
     motifs = motifCollection(min_length = [10,6,8,8,8,8], scan_type = \
-    "4+", perfect = True)
+    "3-4", perfect = True)
     seq_index = 0
-    out_handle = open('test_REMASK.fa', 'w')
+    out_handle = open(options.output, 'w')
     good_records = []
-    for record in SeqIO.parse(open('test.fa','rU'), 'fasta'):
+    count = 0
+    for record in SeqIO.parse(open(options.input,'rU'), 'fasta'):
         if record.seq:record.skip = False
         # do something with header info
         info = SeqHeader(record.id)
@@ -228,6 +265,9 @@ def main():
                 seq_index += 1
                 #pdb.set_trace()
                 good_records.append(record)
+        count += 1
+        if count%1000 == 0:
+            print 'Processed % sequences' % count
     SeqIO.write(good_records, out_handle, "fasta")
     out_handle.close()
     cur.close()
