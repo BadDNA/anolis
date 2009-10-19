@@ -3,3 +3,5 @@ msat
 *.sqlite
 *.tmproj
 *.csv
+*.bed
+*.bak
