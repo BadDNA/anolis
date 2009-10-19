@@ -1,3 +1,5 @@
 msat
 *.fa
 *.sqlite
+*.tmproj
+*.csv
