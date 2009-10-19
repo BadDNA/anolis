@@ -267,7 +267,7 @@ def main():
                 good_records.append(record)
         count += 1
         if count%1000 == 0:
-            print 'Processed % sequences' % count
+            print 'Processed %s sequences' % count
     SeqIO.write(good_records, out_handle, "fasta")
     out_handle.close()
     cur.close()
