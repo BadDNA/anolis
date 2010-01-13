@@ -5,3 +5,5 @@ msat
 *.csv
 *.bed
 *.bak
+*.xls
+*.xlsx
