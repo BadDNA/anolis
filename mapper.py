@@ -3,23 +3,37 @@
 """
 untitled.py
 
-Created by Brant Faircloth on 2010-01-28.
+Created by Brant Faircloth and Nicholas Crawford on 2010-01-28.
 Copyright (c) 2010 Brant Faircloth. All rights reserved.
 """
 
 import pdb
 import sqlite3
+import MySQLdb
+from utilities import private_data # this is a homemade module that contains my mysql pass
 from Bio import SeqFeature
 from GenomeDiagram import GDDiagram, GDFeatureSet, GDGraphSet, GDTrack
 
 
-def getRecords(cur):
+def getRecordsSqlite(cur):
     '''currently this will be by scaffold'''
+    conn = sqlite3.connect('anolis.10-19-09.sqlite')
+    cur = conn.cursor()
     cur.execute('''select sequence.id, primers.l_start, primers.l_stop from 
         sequence, primers where sequence.id = primers.id and seq_map like 
         "scaffold_0:%"''')
     return cur.fetchall()
 
+def getRecordsMySQL():
+    """gets data from appopriate mysql database"""
+    password = private_data.mysql_pass() # gets pass from module
+    conn = MySQLdb.connect(host = "localhost", user = "nick", passwd = password, db = "anolis_msats")
+    cur = conn.cursor()
+    cur.execute('''select a.scaffold_id, a.start, a.stop 
+        from anocar1 as a
+        limit 20
+        ''') 
+    return cur.fetchall()
 
 def features(data):
     sequenceFeatureHolder = ()
@@ -39,26 +53,26 @@ def featureSet(feat, name = 'Microsatellite features'):
     return fs
 
 
-def main():
-    conn = sqlite3.connect('anolis.10-19-09.sqlite')
-    cur = conn.cursor()
-    data = getRecords(cur)
-    feat = features(data)
-    # create the feature-set
-    microsat_features = featureSet(feat[:20])
-    # create track and add feature-set
-    gdt1 = GDTrack('Microsatellite features', greytrack=1)
-    gdt1.add_set(microsat_features)
-    # add tracks to diagram
-    gdd = GDDiagram('Scaffold_0')
-    pdb.set_trace()
-    gdd.add_track(gdd, 2)
-    # draw the diagram
-    gdd.draw(format='linear', orientation='landscape', tracklines=0, pagesize='A5', fragments=5, circular=0)
-    
-    pdb.set_trace()
 
 
-if __name__ == '__main__':
-    main()
+# data = getRecordsSqlite() # get data from Sqlite db
+data = getRecordsMySQL()
+feat = features(data)
+microsat_features = featureSet(feat)
+# create diagram
+
+gdd = GDDiagram('Scaffold_0')
+gdt1 = gdd.new_track(1, greytrack=1, name='Microsatellite features')
+gdfs = gdt1.new_set('feature')
+
+for feature in microsat_features.features.values():
+    if feature.type=='microsatellite':
+        print feature
+        gdfs.add_feature(feature) 
+
+# draw the diagram
+print 'here'
+gdd.draw(format='linear', orientation='landscape', tracklines=0, pagesize='A5', fragments=5, circular=0) 
+gdd.write('NC_005213.ps', 'PS')
+
 
