@@ -8,3 +8,4 @@ msat
 *.xls
 *.xlsx
 nicks_dbase/*
+doc/_build
