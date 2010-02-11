@@ -7,3 +7,4 @@ msat
 *.bak
 *.xls
 *.xlsx
+nicks_dbase/*
