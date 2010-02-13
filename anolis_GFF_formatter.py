@@ -33,7 +33,7 @@ Alias = type
 
 def get_lines_from_db():
 	"""docstring for get_lines_from_db"""
-	conn = MySQLdb.connect(host = "localhost", user = "nick", passwd = "", db = "anolis_msats")
+	conn = MySQLdb.connect(host = "localhost", user = "nick", passwd = "valve123", db = "anolis_msats")
 	cursor = conn.cursor()
 	
 	query = """select a.scaffold_id, a.start, a.stop, l.id, l.motif, l.type 
