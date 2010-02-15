@@ -29,7 +29,7 @@ def processSQLoutput(query_result):
 
 class DrawChromosome(object):
     """docstring for DrawChromosome"""
-    def __init__(self, length_bp, scale, width = 8, side_buffer=200, image_size = (300,1000)):
+    def __init__(self, length_bp, scale, width = 20, side_buffer=200, image_size = (300,1000)):
         super(DrawChromosome, self).__init__()
         self.length_bp = length_bp
         self.scale = scale
@@ -63,22 +63,26 @@ class DrawChromosome(object):
         
         left_side = top_left_chr + bottom_right_chr
         right_side = top_right_chr + bottom_left_chr
-
+        white_center = (top_left_chr,top_right_chr,bottom_left_chr,bottom_right_chr)
+        
+        # draw left and rigth sides of chromosome
+        self.draw.polygon(white_center,fill = "white")
         self.draw.line(left_side,fill = "black")
         self.draw.line(right_side,fill = "black")
         
         def chromosome_top(self):
+            """draws curve at top of chromosome"""
             
             chr_length = int(self.chr_length)
             top_left = (self.side_buffer - self.half_chr, self.side_buffer - self.half_chr)
             bottom_right = (self.side_buffer + self.half_chr, self.side_buffer + self.width - self.half_chr)
-            
             
             bbox = top_left +  bottom_right
             self.draw.arc(bbox, 180, 0, fill = 'black')
             
 
         def chromosome_bottom(self):
+            """draws curve at bottom of chromosom"""
             chr_length = int(self.chr_length)  # fixes float error
             top_left = (self.side_buffer - self.half_chr, self.side_buffer - self.half_chr + chr_length)
             bottom_right = (self.side_buffer + self.half_chr, self.side_buffer + self.width - self.half_chr + chr_length)
@@ -90,22 +94,38 @@ class DrawChromosome(object):
         chromosome_top(self)
         chromosome_bottom(self)
     
-    def add_tick_set(self, ticks, length = 5, color = 'black'):
+    def add_tick_set(self, ticks, length = 5, color = 'black', labeled = False, text_color = 'grey'):
         """draws ticks"""
         for count, tick in enumerate(ticks):
-            tick = int(tick) * self.relative_tick_size
+            scaled_tick = int(tick) * self.relative_tick_size
             tick_x_left = self.side_buffer - self.half_chr - length
             tick_x_right = self.side_buffer + self.half_chr + length
+            tick_y = scaled_tick+self.side_buffer
             
-            corrds = [(tick_x_left, tick+self.side_buffer), (tick_x_right, tick+self.side_buffer)]
+            corrds = [(tick_x_left, tick_y), (tick_x_right, tick_y)]
             self.draw.line(corrds,fill= color)
+            
+            if labeled == True:
+                self.draw.text((tick_x_right, tick_y), str(tick) ,fill=text_color,font=None)
+                #.text(y,message,fill=None,font=None)
+ 
+    def add_bp_ticks(self,inc_bp = 1000000, color = 'grey', labeled = True):
+        """adds labeled ticks at a specified number of basepairs"""
+        if labeled == True:
+            ticks =  range(0,self.length_bp,inc_bp)
+            self.add_tick_set(ticks,length = 15, labeled = True, text_color = 'grey')
         
-    
-    def draw_chromosome(self):
+        if labeled == False:
+            ticks =  range(0,self.length_bp,inc_bp)
+            self.add_tick_set(ticks,length = 15, labeled = False)
+        
+    def show_chromosome(self):
+        """writes final image to file"""
         self.im.show()
-          
-
-
+    
+    def save_chromosome(self, name, format = "PNG"):
+        self.im.save(name,format)
+    
 def main():
     
     # find tetra positions
@@ -127,8 +147,10 @@ def main():
     chrm.create_image()
     chrm.add_tick_set(tetra_locs,color = 'grey')
     chrm.add_tick_set(primer_locs,color = 'red', length = 8)
+    chrm.add_bp_ticks()
     chrm.add_chromosome()
-    chrm.draw_chromosome()
+    #chrm.show_chromosome()
+    chrm.save_chromosome('test.ps','EPS')
     pass
 
 
