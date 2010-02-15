@@ -58,8 +58,8 @@ class DrawChromosome(object):
         bottom_right_chr = (self.side_buffer-self.half_chr, self.chr_length+self.side_buffer)
         bottom_left_chr = (self.side_buffer+self.half_chr, self.chr_length+self.side_buffer)
         
-        # note: that something is mixed up with the labels, currently works
-        # but should be fixed for clarity. 
+        # note: that something is mixed up with the label.  Althought it currently works
+        # the labels should be fixed for clarity. 
         
         left_side = top_left_chr + bottom_right_chr
         right_side = top_right_chr + bottom_left_chr
@@ -98,10 +98,8 @@ class DrawChromosome(object):
             tick_x_right = self.side_buffer + self.half_chr + length
             
             corrds = [(tick_x_left, tick+self.side_buffer), (tick_x_right, tick+self.side_buffer)]
-            if count > 10:
-                print corrds
             self.draw.line(corrds,fill= color)
-        pass
+        
     
     def draw_chromosome(self):
         self.im.show()
