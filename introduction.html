@@ -1,0 +1,114 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; anocar-msats v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="anocar-msats v0.2 documentation" href="index.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="The anolis microsatellite database" href="index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="index.html">
+          <span>anocar-msats v0.2 documentation</span></a></h1>
+        <h2 class="heading"><span>Introduction</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">The anolis microsatellite database</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="license.html">License</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The anolis microsatellite primer database is a project we started to use the available <em>Anolis carolinensis</em> genomic sequence to design microsatellite DNA primers for Anolis because, strangely, there was not a set of decent primers.</p>
+<div class="section" id="anocar1-microsatellite-primer-database-deprecated">
+<h2>anoCar1 microsatellite primer database [deprecated]<a class="headerlink" href="#anocar1-microsatellite-primer-database-deprecated" title="Permalink to this headline">¶</a></h2>
+<p>Given that we had an entire genome at our disposal, we sort of went overboard - and we <em>initially</em> located and designed tagged primers [Schuelke2000, Boutin-Ganache2001]_ for roughly 30,000 microsatellite loci in the Anolis genome.  The code we initially used for the first version the database is available in <a class="reference external" href="http://github.com/banddna/anolis/downloads">downloads</a> as v0.1 (SHA: 60e9d31)</p>
+<p>With the advent of the anoCar2 genome assembly (available at <a class="reference external" href="ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/">ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/</a>, we were in a bit of a pickle because we had initially built the database from a semi-hodgepodge of scripts using the anoCar1 genome build.  We had also focused only on certain classes of microsatellite repeats in an effort to save time, rather than designing primers for dinucs, trinucs, tetranucs, pentanucs, and hexanucs.</p>
+<p>Because remapping reads from one build to another is generally frustrating, we just decided to begin anew and &#8220;start-over&#8221; with our Anolis primer database...</p>
+</div>
+<div class="section" id="anocar2-microsatellite-primer-database">
+<h2>anoCar2 microsatellite primer database<a class="headerlink" href="#anocar2-microsatellite-primer-database" title="Permalink to this headline">¶</a></h2>
+<p>We built the second version of the anolis microsatellite database during June 26-27, 2010 using a (currently) unreleased version of <a class="reference external" href="http://github.com/brantfaircloth/msatcommander">msatcommander</a> that is beefed up to deal with genome-scale data.</p>
+<p>We scanned a fasta format anoCar2 build constructed from the read and AGP files available at <a class="reference external" href="ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/">ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/</a>, searching for mononuc, dinuc, trinuc, tetranuc, pentanuc, and hexanuc repeats of minimum motif lengths 10,6,4,4,4,4; respectively.</p>
+<p>We combined complex/compound repeats within &lt;50 bp of one another, and we designed and tagged primers for those repeats where we could, using <a class="reference external" href="http://primer3.sourceforge.net">primer3</a>, v2, which incorporates thermodynamic parameters to the primer design process - in theory, yielding &#8220;better&#8221; primers.  We also set the primer3 parameters to consider only multiple candidate primers for a particular locus that were ≥ 10 bp from one another - ensuring that each primer chosen is really unique, to some extent (and more likely to amplify product if another primer should fail).</p>
+<p>Because of the volume of the data, and the need for a database that supports concurrent writes, we initially stored the motif and primer data in a MySQL database while we ran the program.  We subsequently copied the table data to a <a class="reference external" href="http://www.sqlite.org/">sqlite</a> database for distribution.</p>
+<div class="section" id="by-the-numbers">
+<h3>By the numbers<a class="headerlink" href="#by-the-numbers" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="motifs">
+<h4>Motifs<a class="headerlink" href="#motifs" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Dinucs      153,558</li>
+<li>Trinucs     389,018</li>
+<li>Tetranucs   100,290</li>
+<li>Pentanucs   5,761</li>
+<li>Hexanucs    2,067</li>
+</ul>
+</div>
+<div class="section" id="primers">
+<h4>Primers<a class="headerlink" href="#primers" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>558,618 primers designed (simple/compound/complex loci; up to 4 primers per locus)</li>
+<li>349,547 primers tagged with M13R or CAG sequences for polymorphism testing</li>
+<li>115,538 &#8220;Best&#8221; tagged primers designed where &#8220;Best&#8221; in this sense means the best of up to 4 primers that may have had tags applied to them.  The criteria for &#8220;best&#8221; is the primer (of the ≤4) that has the lowest values for the &#8220;nasties&#8221; (e.g. self-complementarity, pair-complementarity, etc.) that also should allow amplification (e.g. it&#8217;s within spec.)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="availability">
+<h3>Availability<a class="headerlink" href="#availability" title="Permalink to this headline">¶</a></h3>
+<p>At present, we have not posted the primer database while we QC the results a bit and build some supporting files (BED locations of primers, etc.).  However, if you would like a copy of the sqlite dbase, please send an email to:</p>
+<blockquote>
+faircloth+anolis _at_ gmail _dot_ com</blockquote>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">The anolis microsatellite database</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="license.html">License</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2010, Brant C. Faircloth and Nick G. Crawford.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>
