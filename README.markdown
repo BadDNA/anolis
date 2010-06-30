@@ -2,13 +2,15 @@
 
 The anolis microsatellite primer database is a project we started to use the available _Anolis carolinensis_ genomic sequence to design microsatellite DNA primers for Anolis because, strangely, there was not a set of decent primers.
 
-Given that we had an entire genome at our disposal, we sort of went overboard - and we initially located and designed tagged primers () for several thousand microsatellite loci in the Anolis genome.  The code we use for this is available in [downloads](downloads) as v0.1 (60e9d311fbacf9c2fa2380c7acfd0c4c36b13e29).
+## anoCar1 microsatellite primer database ##
+
+Given that we had an entire genome at our disposal, we sort of went overboard - and we initially located and designed tagged primers (Schuelke 2000, Boutin-Ganache et al. 2001) for several thousand microsatellite loci in the Anolis genome.  The code we initially used for the first version the database is available in [anolis/downloads](downloads) as v0.1 (SHA: 60e9d311fbacf9c2fa2380c7acfd0c4c36b13e29).
 
 With the advent of the anoCar2 genome assembly (available at [ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/](ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/), we were in a bit of a pickle because we had initially built the database from a semi-hodgepodge of scripts and using the anoCar1 genome build.  We had focused only on certain classes of microsatellite repeats, rather than designing primers for dinucs, trinucs, tetranucs, pentanucs, and hexanucs.
 
 Because remapping reads from one build to another is generally frustrating, we just decided to begin anew and "start-over" with our Anolis primer database.
 
-## anoCar2 Microsatellite Primer Database ##
+## anoCar2 microsatellite primer database ##
 
 We built the second version of the anolis microsatellite database during June 26-27, 2010 using a (currently) unreleased version of [msatcommander](http://github.com/brantfaircloth/msatcommander) that is generally scaled up to deal with genome-scale data.
 
@@ -31,12 +33,12 @@ Motifs
 Primers
 
 * 558,618 primers designed (simple/compound/complex loci; up to 4 primers per locus)
-* 349, 547 primers tagged with M13 or CAG
+* 349,547 primers tagged with M13R or CAG sequences for polymorphism testing
 * 115,538 "Best" tagged primers designed where "Best" in this sense means the best of up to 4 primers that may have had tags applied to them.  The criteria for "best" is the primer (of the ≤4) that has the lowest values for the "nasties" (e.g. self-complementarity, pair-complementarity, etc.) that also should allow amplification (e.g. it's within spec.)
 
 ## Availability ##
 
-At present, we have yet to post the primer database while we QC the results a bit and build some supporting files (BED locations of primers, etc.).  However, if you would like a copy of the sqlite dbase, please send an email to:
+At present, we have not posted the primer database while we QC the results a bit and build some supporting files (BED locations of primers, etc.).  However, if you would like a copy of the sqlite dbase, please send an email to:
 
     faircloth+anolis _at_ gmail _dot_ com
 
