@@ -1,4 +1,4 @@
-.. _introduction
+.. _introduction:
 
 ***************
 Introduction
@@ -9,7 +9,7 @@ The anolis microsatellite primer database is a project we started to use the ava
 anoCar1 microsatellite primer database [deprecated]
 ===================================================
 
-Given that we had an entire genome at our disposal, we sort of went overboard - and we *initially* located and designed tagged primers [Schuelke2000, Boutin-Ganache2001]_ for roughly 30,000 microsatellite loci in the Anolis genome.  The code we initially used for the first version the database is available in `downloads <http://github.com/banddna/anolis/downloads>`_ as v0.1 (SHA: 60e9d31)
+Given that we had an entire genome at our disposal, we sort of went overboard - and we *initially* located and designed tagged primers [Schuelke2000, Boutin-Ganache2001]_ for roughly 30,000 microsatellite loci in the Anolis genome.  The code we initially used for the first version the database is available in `downloads <http://github.com/baddna/anolis/downloads>`_ as v0.1 (SHA: 60e9d31)
 
 With the advent of the anoCar2 genome assembly (available at `ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/ <ftp://ftp.broad.mit.edu/distribution/assemblies/reptiles/lizard/>`_, we were in a bit of a pickle because we had initially built the database from a semi-hodgepodge of scripts using the anoCar1 genome build.  We had also focused only on certain classes of microsatellite repeats in an effort to save time, rather than designing primers for dinucs, trinucs, tetranucs, pentanucs, and hexanucs.
 
