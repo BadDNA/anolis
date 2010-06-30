@@ -9,3 +9,4 @@ msat
 *.xls
 *.xlsx
 nick/
+doctrees/
