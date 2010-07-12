@@ -1,4 +1,4 @@
-#!/Users/nick/Desktop/Code/flask_test/env/bin/python
+#!/Users/nick/Desktop/Code/anolis/web/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==0.7.2','console_scripts','pip'
 __requires__ = 'pip==0.7.2'
 import sys
