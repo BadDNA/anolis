@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+
+	<link rel="stylesheet" href="{{url_for('static', filename='screen.css')}}" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="{{url_for('static', filename='print.css')}}" type="text/css" media="print"/>   
+	<!--[if IE]><link rel="stylesheet" href="{{url_for('static', filename='ie.css')}}" type="text/css" media="screen, projection"><![endif]-->
+	
+    <!-- blue print pluggins -->
+    <link rel="stylesheet" href="{{url_for('static', filename='/plugins/fancy-type/screen.css')}}" type="text/css" media="screen, projection" /> 
+    
+    <!-- scripts -->
+    <!-- static/script/jquery-1.4.2.min.js -->
+
+<title>Anole MSats</title>
+    
+</head>
+<body>
+    <div class="container ">
+        <div class="span-24 last"></div>
+        <hr />
+        <div id="header" class="span-24 last"> <h1>Anolis Microsatellites DB</h1></div>
+        
+        <hr />
+        
+        <div id="subheader" class="span-24 last">
+        <h3 class="alt">A searchable DB of [a lot!] of Anolis carolinenesis microsatellites <strong>(version 1.0)</strong></h3>
+        </div>
+
+        <hr />
+        
+	    <div class='span-12 append-11 prepend-1 last'>
+        <form action method="GET" class="inline">
+            <fieldset>
+            <legend>Basic Seach Parameters</legend>
+            <div class='span-6'>
+            {{form.size.label}}
+            </div>
+            <div class='span-5 last'>
+            {{form.size}}
+            </div>
+            
+            <div class='span-6'>
+            {{form.perfect.label}}
+            </div>
+            <div class='span-5 last'>
+            {{form.perfect}}
+            </div>
+            
+            <div class='span-6'>
+            {{form.length.label}}
+            </div>
+            <div class='span-5 last'>
+            {{form.length(class='text', size=3, maxlength=3, style='width:48px')}}
+            </div>
+            
+            <div class='span-6'>
+            {{form.combine_loci.label}}
+            </div>
+            <div class='span-5 last'>
+            {{form.combine_loci(class='text', style='width:30px')}}
+            </div>
+            
+            <div class='span-6'>
+            {{form.design_primers.label}}
+            </div>
+            <div class='span-5 last'>
+            {{form.design_primers}}
+            </div>
+            
+            <div class='span-6'>
+            {{form.tag_primers.label}}
+            </div>
+            <div class='span-5 last'>
+            {{form.tag_primers}}
+            </div>
+            
+            <div class='span-11 last'>
+            {{form.submit}}
+            </div>
+            </fieldset>
+        </form>
+        
+        </div>
+    <hr />
+    </div>
+</body>
