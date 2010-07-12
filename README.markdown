@@ -1,3 +1,9 @@
+# Anolis Microsatellite Primer/Locus Website *v1.0* #
+A web app for *future* online access to the **Anolis Microsatellite DB**.  It is currently non-functional, but running ('python manage.py') with Flask properly [configured](http://flask.pocoo.org/docs/installation/#installation) will produce a basic webpage with an example form layout.  
+
+The backend is written in [Flask](http://flask.pocoo.org/). The forms are created with using the flask extension of [WTFforms](http://flask.pocoo.org/docs/patterns/wtforms/).  The CSS is from the [blueprintcss framework.] 
+(http://www.blueprintcss.org). Javascipt will use the [jquery](jquery.com) library.
+
 # Anolis Microsatellite Primer Database #
 
 The anolis microsatellite primer database is a project we started to use the available _Anolis carolinensis_ genomic sequence to design microsatellite DNA primers for Anolis because, strangely, there was not a set of decent primers.
