@@ -13,6 +13,29 @@
     
     <!-- scripts -->
     <!-- static/script/jquery-1.4.2.min.js -->
+   
+    <script type="text/javascript" src="{{url_for('static', filename='script/jquery-1.4.2.min.js')}}"></script> 
+
+	<script type=text/javascript>
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+		
+	<script type=text/javascript>
+	  $(function() {
+	    $('#submit_msats').bind('click', function() {
+	      $.getJSON($SCRIPT_ROOT + '/query_result', {
+	      	size: $("input[name='size']").val(),
+	      	length: $("length[name='length']").val(),
+	      	combine_loci: $("combine_loci[name='combine_loci']").val(),
+	      	tag_primers: $("tag_primers[name='tag_primers']").val(),
+	      	}, function(data) {
+	        $("#test_result").text(data.result);
+	      });
+	      return false;
+	    });
+	  });
+	</script>
+    
 
 <title>Anole MSats</title>
     
@@ -21,23 +44,28 @@
     <div class="container">
         <div class="span-24 last"></div>
         <hr />
-        <div id="header" class="span-24 last"> <h1>Anolis Microsatellites DB</h1></div>
+        <div id="header" class="span-24 last"> <h1>Anolis Microsatellites Database</h1></div>
         
         <hr />
         
         <div id="subheader" class="span-24 last">
-        <h3 class="alt">A searchable DB of [a lot!] of Anolis carolinenesis microsatellites <strong>(version 1.0)</strong></h3>
+        <h3 class="alt">A searchable DB of [a lot!] of Anolis carolinenesis microsatellites <strong>(version 0.1)</strong></h3>
         </div>
 
         <hr />
         
-	    <div class='span-12 append-11 prepend-1 last'>
+	    <div class='span-12 border'>
+	    <div class="span-11"> 
+	    	<h3>Search Parameters:</h3>
+	    </div>
+	    
         <form action method="GET" class="inline">
             <fieldset>
-            <legend>Basic Seach Parameters</legend>
+            
             <div class='span-6'>
             {{form.size.label}}
             </div>
+            
             <div class='span-5 last'>
             {{form.size}}
             </div>
@@ -76,12 +104,26 @@
             <div class='span-5 last'>
             {{form.tag_primers}}
             </div>
-            
-            <div class='span-11 last'>
-            {{form.submit}}
+                      
+            <div class='span-6'></div>
+            <div class='span-3 last'>
+        	<button id="submit_msats" name="submit_msats" type="submit" value="submit_msats" class="button positive">
+				<img src="/web_media/css/blueprint/plugins/buttons/icons/tick.png" alt=""/> Submit
+			</button>
             </div>
             </fieldset>
         </form>        
+        </div>
+        <div class='span-12 last'>
+        	<div class='span-11 last' id = 'news'>
+        		<h3>Search Results</h3>
+        	</div>
+        	<div class='span-11 last' id = 'text'>
+        	            
+        	</div>
+        	<div class='span-11 last' id = 'test_result'>
+        	</div>
+        	
         </div>
         
         <div class="span-24" id="footer">
@@ -100,7 +142,6 @@
             <div class="span-4 last">
                 <a href="http://flask.pocoo.org/"><img
                     src="http://flask.pocoo.org/static/badges/powered-by-flask-s.png"
-                    border="0"
                     alt="powered by Flask"
                     title="powered by Flask"></a>
                 </div>

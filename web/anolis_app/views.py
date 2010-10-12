@@ -1,8 +1,10 @@
-from flask import Flask, request, flash, redirect, url_for, \
-    render_template
+from anolis_app import app
+from flask import Flask, request, flash, redirect, url_for, render_template, jsonify
 from flaskext.wtf import Form, TextField, BooleanField, SelectField, SubmitField, IntegerField, validators
+# from queries import *
+import models
 
-app = Flask(__name__)
+
 app.config.update(
     DEBUG=True,
     SECRET_KEY='...'
@@ -25,15 +27,19 @@ class MyForm(Form):
     pigtail_primers = BooleanField(label=u'Pigtail Primers')
     submit = SubmitField()
 
+@app.route('/query_result')
+def add_numbers():
+  	size = request.args.get('size', 0, type=int) 
+  	length = request.args.get('length', 0, type=int)
+  	combine_loci = request.args.get('combine_loci', False, type=bool)
+  	tag_primers = request.args.get('tag_primers', False, type=bool)
+  	print 'running query'
+	return jsonify(result='Processed Form')
+
+
+
 @app.route("/")
 def submit():
     form = MyForm(csrf_enabled=True)
-    print form
-    if form.validate_on_submit():
-        flash("Success")
-        redirect(url_for("index"))
+    print 'here'
     return render_template("index.html", form=form)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
