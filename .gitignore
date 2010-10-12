@@ -8,5 +8,6 @@ msat
 *.bak
 *.xls
 *.xlsx
+*.pyc
 nick/
 doctrees/
