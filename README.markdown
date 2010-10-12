@@ -1,7 +1,7 @@
 # Anolis Microsatellite Primer/Locus Website *v1.0* #
 A web app for *future* online access to the **Anolis Microsatellite DB**.  It is currently non-functional, but running ('python manage.py') with Flask properly [configured](http://flask.pocoo.org/docs/installation/#installation) will produce a basic webpage with an example form layout.  Note, to get flask running properly on your computer you'll have to create an empty flask install directory following the configuration instruction and then move ('manage.py) and the ('static') and ('templates') folders from ('web') into that directory.  
 
-![screenshot of webapp](http://github.com/BadDNA/anolis/raw/master/readme_image_1.jpg)
+![screenshot of webapp](http://github.com/BadDNA/anolis/raw/master/README_1.gif)
 
 The backend uses the [Flask](http://flask.pocoo.org/) web framework. The forms are created with the flask extension of [WTForms](http://flask.pocoo.org/docs/patterns/wtforms/). CSS is from the [blueprintcss](http://www.blueprintcss.org) framework. Javascipt will use the [jquery](jquery.com) library.
 
