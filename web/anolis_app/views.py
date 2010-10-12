@@ -2,7 +2,7 @@ from anolis_app import app
 from flask import Flask, request, flash, redirect, url_for, render_template, jsonify
 from flaskext.wtf import Form, TextField, BooleanField, SelectField, SubmitField, IntegerField, validators
 # from queries import *
-import models
+# import models
 
 
 app.config.update(
