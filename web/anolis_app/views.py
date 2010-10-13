@@ -22,7 +22,7 @@ class MyForm(Form):
     combine_loci = BooleanField(label=u'Combine Microsatellites:')
     design_primers = BooleanField(label=u'Design Primers:')
     tag_primers = SelectField(label=u'Tag Primers:',\
-                                choices=[('cag', 'CAG Tag'),\
+                                choices=[('None','No Tag'), ('cag', 'CAG Tag'),\
                                 ('m13', 'M13R Tag')])
     pigtail_primers = BooleanField(label=u'Pigtail Primers')
     # submit = SubmitField()
@@ -30,16 +30,18 @@ class MyForm(Form):
 @app.route('/query_result')
 def add_numbers():		
 	print request.args
-	perfect = request.args.get('perfect', False, type=bool)
-  	msat_size = request.args.get('size', 'di', type=str) 
-  	msat_length = request.args.get('length', 0, type=int)
+	msat_perfect = request.args.get('perfect', False, type=bool)
+  	msat_size = request.args.get('msat_size', 'di', type=str) 
+  	msat_length = request.args.get('msat_length', 0, type=int)
   	combine_loci = request.args.get('combine_loci', False, type=bool)
-  	tag_primers = request.args.get('tag_primers', False, type=bool)
+  	design_primers = request.args.get('design_primers', False, type=bool)
+  	tag_primers = request.args.get('tag_primers', 'None', type=str)
   	
-  	print 'perfect', perfect
+  	print 'perfect', msat_perfect
 	print 'msat_size', msat_size
 	print 'msat_length', msat_length
 	print 'combine_loci', combine_loci
+	print 'design_primers', design_primers
 	print 'tag_primers', tag_primers
 	
 	

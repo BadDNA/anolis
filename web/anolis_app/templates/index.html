@@ -22,13 +22,14 @@
 		
 	<script type=text/javascript>
 	  $(function() {
-	    $('#submit_msats').bind('click', function() {
+	    $('.button').bind('click', function() {
 	      $.getJSON($SCRIPT_ROOT + '/query_result', {
-	      	msat_size: $("input[name='msat_size']").val(),
-	      	perfect: $("input[name='perfect']").val(),
-	      	msat_length: $("length[name='msat_length']").val(),
-	      	combine_loci: $("combine_loci[name='combine_loci']").val(),
-	      	tag_primers: $("tag_primers[name='tag_primers']").val(),
+	      	msat_size: $('input[id="msat_size"]').val(),
+	      	msat_length: $('input[name="msat_length"]').val(),
+	      	msat_perfect: $('input[name="msat_perfect"]').val(),
+	      	combine_loci: $('input[name="combine_loci"]').val(),
+	      	design_primers: $('input[name="design_primers"]').val(),
+	      	tag_primers: $('input[name="tag_primers"]').val(),
 	      	}, function(data) {
 	        $("#stat1").text(data.msat_size),
 	        $("#stat2").text(data.msat_length);
@@ -61,7 +62,7 @@
 	    	<h3>Search Parameters:</h3>
 	    </div>
 	    
-        <form action method="GET" class="inline">
+        <form action method="GET" class="span-11 inline">
             <fieldset>
             
             <div class='span-5'>
