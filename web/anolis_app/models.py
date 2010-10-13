@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
 from sqlalchemy import Column, INTEGER, TEXT, FLOAT, ForeignKey
 from anolis_app.database import Base
 
@@ -67,11 +70,11 @@ class Combined(Base):
     def __repr__(self):
         return '<Combined %s>' % (self.id)
 
-
-class Primers(Base):
-    __tablename__ = 'primers'
+class Primers2(Base):
+    __tablename__ = 'primers2'
+    id = Column(u'id', INTEGER(), primary_key=True, nullable=False)
     sequence_id = Column(u'sequence_id', INTEGER(), ForeignKey(u'combined.sequence_id'), nullable=False)
-    id = Column(u'id', INTEGER(), ForeignKey(u'combined.id'), nullable=False)
+    combined_id = Column(u'combined_id', INTEGER(), ForeignKey(u'combined.id'), nullable=False) 
     primer = Column(u'primer', INTEGER(), nullable=False)
     left_p = Column(u'left_p', TEXT(length=None, convert_unicode=False, assert_unicode=None,\
                     unicode_error=None, _warn_on_bytestring=False), nullable=False)
@@ -100,13 +103,14 @@ class Primers(Base):
     pair_compl_any = Column(u'pair_compl_any', FLOAT(precision=None, asdecimal=False))
     pair_penalty = Column(u'pair_penalty', FLOAT(precision=None, asdecimal=False))
     
-    def __init__(self, sequence_id=None, id=None, primer=None, left_p= None, left_sequence=None, left_tm=None, left_gc=None,\
+    def __init__(self, id=None, sequence_id=None, combined_id=None, primer=None, left_p= None, left_sequence=None, left_tm=None, left_gc=None,\
                     left_self_end=None, left_self_any=None, left_hairpin=None, left_end_stability=None, left_penalty=None,\
                     right_p=None, right_sequence=None, right_tm=None, right_gc=None, right_self_end=None, right_self_any=None,\
                     right_hairpin=None, right_end_stability=None, right_penalty=None, pair_compl_end=None, pair_compl_any=None,\
                     pair_penalty=None):
-        self.sequence_id = sequence_id
         self.id = id
+        self.sequence_id = sequence_id
+        self.combined_id = combined_id
         self.primer = primer
         self.left_p = left_p
         self.left_sequence = left_sequence
@@ -137,11 +141,11 @@ class Primers(Base):
 class TaggedPrimers(Base):
     __tablename__ = 'tagged_primers'
     sequence_id = Column(u'sequence_id', INTEGER(), ForeignKey(u'combined.sequence_id'), nullable=False)
-    id = Column(u'id', INTEGER(), ForeignKey(u'combined.id'), nullable=False)
+    id = Column(u'id', INTEGER(), ForeignKey(u'combined.id'), nullable=False, primary_key=True)
     primer = Column(u'primer', INTEGER(), nullable=False)
     best = Column(u'best', INTEGER(), nullable=False)
     tag = Column(u'tag', TEXT(length=None, convert_unicode=False, assert_unicode=None,\
-                unicode_error=None, _warn_on_bytestring=False)),
+                unicode_error=None, _warn_on_bytestring=False))
     tagged = Column(u'tagged', TEXT(length=None, convert_unicode=False, assert_unicode=None,\
                     unicode_error=None, _warn_on_bytestring=False))
     tag_seq = Column(u'tag_seq', TEXT(length=None, convert_unicode=False, assert_unicode=None,\
@@ -211,7 +215,7 @@ class TaggedPrimers(Base):
 
 class CombinedComponents(Base):
     __tablename__ = 'combined_components'
-    sequence_id = Column(u'sequence_id', INTEGER(), ForeignKey(u'combined.sequence_id'), nullable=False)
+    sequence_id = Column(u'sequence_id', INTEGER(), ForeignKey(u'combined.sequence_id'), nullable=False, primary_key=True)
     combined_id = Column(u'combined_id', INTEGER(), ForeignKey(u'combined.id'), nullable=False)
     motif = Column(u'motif', TEXT(length=None, convert_unicode=False, assert_unicode=None,\
                     unicode_error=None, _warn_on_bytestring=False))
@@ -225,4 +229,29 @@ class CombinedComponents(Base):
     
     def __repr__(self):
         return '<CombinedComponents %s:%s>' % (self.sequence_id, self.combined_id)
+
+# def main():
+#     from sqlalchemy.orm import sessionmaker
+#     from sqlalchemy import create_engine, MetaData, Table
+#     from sqlalchemy import create_engine
+#     from sqlalchemy.orm import scoped_session, sessionmaker
+#     from sqlalchemy.ext.declarative import declarative_base
+#     
+#     engine = create_engine('sqlite:////Users/nick/Desktop/Code/anolis/web/anolis_app/db/anole2.microsatellites.sqlite', convert_unicode=True)
+#     metadata = MetaData()
+#     Session = sessionmaker(bind=engine)
+# 
+# 
+# 
+#     engine = create_engine('sqlite:////Users/nick/Desktop/Code/anolis/web/db/anole2.microsatellites.sqlite', convert_unicode=True)
+#     db_session = scoped_session(sessionmaker(autocommit=False,
+#                                              autoflush=False,
+#                                              bind=engine))
+#     Base = declarative_base()
+#     Base.query = db_session.query_property()
+#     Base.metadata.create_all(bind=engine)
+#     
+# 
+# if __name__ == '__main__':
+#     main()
 
