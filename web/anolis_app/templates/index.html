@@ -24,12 +24,14 @@
 	  $(function() {
 	    $('#submit_msats').bind('click', function() {
 	      $.getJSON($SCRIPT_ROOT + '/query_result', {
-	      	size: $("input[name='size']").val(),
-	      	length: $("length[name='length']").val(),
+	      	msat_size: $("input[name='msat_size']").val(),
+	      	perfect: $("input[name='perfect']").val(),
+	      	msat_length: $("length[name='msat_length']").val(),
 	      	combine_loci: $("combine_loci[name='combine_loci']").val(),
 	      	tag_primers: $("tag_primers[name='tag_primers']").val(),
 	      	}, function(data) {
-	        $("#test_result").text(data.result);
+	        $("#stat1").text(data.msat_size),
+	        $("#stat2").text(data.msat_length);
 	      });
 	      return false;
 	    });
@@ -49,81 +51,95 @@
         <hr />
         
         <div id="subheader" class="span-24 last">
-        <h3 class="alt">A searchable DB of [a lot!] of Anolis carolinenesis microsatellites <strong>(version 0.1)</strong></h3>
+        <h3 class="alt">A searchable DB of [a lot!] of Anolis carolinensis microsatellites <strong>(version 0.1)</strong></h3>
         </div>
 
         <hr />
         
-	    <div class='span-12 border'>
-	    <div class="span-11"> 
+	    <div class='span-11 colborder'>
+	    <div class="span-11 last"> 
 	    	<h3>Search Parameters:</h3>
 	    </div>
 	    
         <form action method="GET" class="inline">
             <fieldset>
             
-            <div class='span-6'>
-            {{form.size.label}}
+            <div class='span-5'>
+            {{form.msat_size.label}}
             </div>
             
             <div class='span-5 last'>
-            {{form.size}}
+            {{form.msat_size}}
             </div>
             
-            <div class='span-6'>
-            {{form.perfect.label}}
+            <div class='span-5'>
+            {{form.msat_length.label}}
             </div>
             <div class='span-5 last'>
-            {{form.perfect}}
+            {{form.msat_length(class='text', size=3, maxlength=3, style='width:48px')}}
             </div>
             
-            <div class='span-6'>
-            {{form.length.label}}
+            <div class='span-5'>
+            {{form.msat_perfect.label}}
             </div>
             <div class='span-5 last'>
-            {{form.length(class='text', size=3, maxlength=3, style='width:48px')}}
+            {{form.msat_perfect}}
             </div>
             
-            <div class='span-6'>
+            <div class='span-5'>
             {{form.combine_loci.label}}
             </div>
             <div class='span-5 last'>
-            {{form.combine_loci(class='text', size=3, maxlength=3, style='width:48px')}}
+            {{form.combine_loci}}
             </div>
             
-            <div class='span-6'>
+            <div class='span-5'>
             {{form.design_primers.label}}
             </div>
             <div class='span-5 last'>
             {{form.design_primers}}
             </div>
             
-            <div class='span-6'>
+            <div class='span-5'>
             {{form.tag_primers.label}}
             </div>
             <div class='span-5 last'>
             {{form.tag_primers}}
             </div>
-                  
-                  
-
-            <div class='span-6'></div>
-            <div class='span-3 last'>
-        	<button id="submit_msats" name="submit_msats" type="submit" value="submit_msats" class="button positive">
-				<img src="{{url_for('static', filename = 'css/plugins/buttons/icons/tick.png')}}" alt=""/> Submit
-			</button>
+            
+            <div class='span-5 prepend-5 last'>
+            	<!-- <a href=# id=calculate>calculate server side</a> -->
+	        	<button id="submit_msats" name="submit_msats" type="submit" value="submit_msats" class="button positive">
+					<img src="{{url_for('static', filename = 'css/plugins/buttons/icons/tick.png')}}" alt=""/> Submit
+				</button>
             </div>
             </fieldset>
         </form>        
         </div>
         <div class='span-12 last'>
-        	<div class='span-11 last' id = 'news'>
-        		<h3>Search Results</h3>
+        	<div class='span-12 last'>
+        		<h3>Search Results:</h3>
         	</div>
-        	<div class='span-11 last' id = 'text'>
-        	            
+        	
+        	<div class='span-3'>
+        		<h4>Summary Stat 1:</h4>
         	</div>
-        	<div class='span-11 last' id = 'test_result'>
+        	<div class= 'span-9 last'>
+        		<h4 id='stat1'>result value</h4>
+        	</div>
+        	
+        	<div class='span-3' >
+        		<h4>Summary Stat 2:</h4>
+        	</div>
+        	
+        	<div class= 'span-9 last'>
+        		<h4 id='stat2'>result value</h4>
+        	</div>
+        	
+        
+        	<div class= 'span-8 last' id='total_msats'></div>
+        	<div class='span-12 last' id = 'test_result'>
+
         	</div>
         	
         </div>
@@ -134,7 +150,7 @@
         
             <div class="span-16 quiet">
                 Website and backend code created by <a href="http://www.ngcrawford.com">Nicholas Crawford</a>
-                and <a href="brant.bol.ucla.edu/">Brant Faircloth</a> - 2010.
+                and <a href="http://brant.bol.ucla.edu/">Brant Faircloth</a> - 2010.
             </div>
         
             <div class="span-4 quiet">
@@ -146,7 +162,8 @@
                     src="http://flask.pocoo.org/static/badges/powered-by-flask-s.png"
                     alt="powered by Flask"
                     title="powered by Flask"></a>
-                </div>
+            </div>
+        
         </div>
         
     <hr />
