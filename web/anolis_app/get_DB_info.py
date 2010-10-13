@@ -1,7 +1,7 @@
 """I used this script to 'reflect' the initial set of tables.  This made generating the 'models' easier."""
 
-from sqlalchemy import create_engine, MetaData
-engine = create_engine('sqlite:////Users/nick/Desktop/Code/anolis/web/db/anole2.microsatellites.sqlite', convert_unicode=True)
+from sqlalchemy import create_engine, MetaData, Table
+engine = create_engine('sqlite:////Users/nick/Desktop/Code/anolis/web/anolis_app/db/anole2.microsatellites.sqlite', convert_unicode=True)
 meta = MetaData()
 meta.create_all(bind=engine)
 
