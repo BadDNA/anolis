@@ -2,6 +2,7 @@
 msat
 *.fa
 *.sqlite
+*.sqlite.old
 *.tmproj
 *.csv
 *.bed
