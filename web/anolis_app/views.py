@@ -28,8 +28,8 @@ class MyForm(Form):
     # submit = SubmitField()
 
 @app.route('/query_result')
-def add_numbers():		
-	print request.args
+def add_numbers():
+
 	msat_perfect = request.args.get('perfect', False, type=bool)
   	msat_size = request.args.get('msat_size', 'di', type=str) 
   	msat_length = request.args.get('msat_length', 0, type=int)
