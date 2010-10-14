@@ -14,29 +14,22 @@
     <!-- scripts -->
     <!-- static/script/jquery-1.4.2.min.js -->
    
-    <script type="text/javascript" src="{{url_for('static', filename='script/jquery-1.4.2.min.js')}}"></script> 
+    <script type="text/javascript" src="{{url_for('static', filename='script/jquery-1.4.2.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='script/jquery.field.min.js')}}"></script> 
 
 	<script type=text/javascript>
 		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 	</script>
 		
 	<script type=text/javascript>
-	  $(function() {
-	    $('.button').bind('click', function() {
-	      $.getJSON($SCRIPT_ROOT + '/query_result', {
-	      	msat_size: $('input[id="msat_size"]').val(),
-	      	msat_length: $('input[name="msat_length"]').val(),
-	      	msat_perfect: $('input[name="msat_perfect"]').val(),
-	      	combine_loci: $('input[name="combine_loci"]').val(),
-	      	design_primers: $('input[name="design_primers"]').val(),
-	      	tag_primers: $('input[name="tag_primers"]').val(),
-	      	}, function(data) {
-	        $("#stat1").text(data.msat_size),
-	        $("#stat2").text(data.msat_length);
-	      });
-	      return false;
-	    });
-	  });
+		$(function() {
+		    $('.button').bind('click', function() {
+		        $.getJSON($SCRIPT_ROOT + '/query_result?' + $(this).closest('form').serialize(), function(data) {
+		            $("#stat1").text(data.msat_size), $("#stat2").text(data.msat_length);
+		        });
+		        return false;
+		    });
+		});
 	</script>
     
 
