@@ -10,6 +10,7 @@
 	
     <!-- blue print pluggins -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/plugins/fancy-type/screen.css')}}" type="text/css" media="screen, projection" /> 
+    <link rel="stylesheet" href="{{url_for('static', filename='css/anolis.css')}}" type="text/css" media="screen, projection" /> 
     
     <!-- scripts -->
     <!-- static/script/jquery-1.4.2.min.js -->
@@ -24,8 +25,8 @@
 	<script type=text/javascript>
 		$(function() {
 		    $('.button').bind('click', function() {
-		        $.getJSON($SCRIPT_ROOT + '/query_result?' + $(this).closest('form').serialize(), function(data) {
-		            $("#stat1").text(data.msat_size), $("#stat2").text(data.msat_length);
+		        $.getJSON($SCRIPT_ROOT + '/query_args?' + $(this).closest('form').serialize(), function(data) {
+		            $("#numb_msats").text(data.numb_msats), $("#stat2").text(data.msat_motif_count);
 		        });
 		        return false;
 		    });
@@ -45,7 +46,7 @@
         <hr />
         
         <div id="subheader" class="span-24 last">
-        <h3 class="alt">A searchable DB of [a lot!] of Anolis carolinensis microsatellites <strong>(version 0.1)</strong></h3>
+        <h3 class="alt">A searchable database of 650,694 Anolis carolinensis microsatellites <strong>(version 0.1)</strong></h3>
         </div>
 
         <hr />
@@ -58,27 +59,27 @@
         <form action method="GET" class="span-11 inline">
             <fieldset>
             
-            <div class='span-5'>
-            {{form.msat_size.label}}
-            </div>
-            
-            <div class='span-5 last'>
-            {{form.msat_size}}
-            </div>
-            
-            <div class='span-5'>
-            {{form.msat_length.label}}
+            <div class='span-5 '>
+            {{form.msat_motif_size.label}}
             </div>
             <div class='span-5 last'>
-            {{form.msat_length(class='text', size=3, maxlength=3, style='width:48px')}}
+            {{form.msat_motif_size}}
             </div>
             
             <div class='span-5'>
-            {{form.msat_perfect.label}}
+            {{form.msat_motif.label}}
             </div>
             <div class='span-5 last'>
-            {{form.msat_perfect}}
+            {{form.msat_motif}}
             </div>
+            
+            <div class='span-5'>
+            {{form.msat_motif_count.label}}
+            </div>
+            <div class='span-5 last'>
+            {{form.msat_motif_count(class='text', size=3, maxlength=3, style='width:48px')}}
+            </div>
+            
             
             <div class='span-5'>
             {{form.combine_loci.label}}
@@ -115,26 +116,15 @@
         		<h3>Search Results:</h3>
         	</div>
         	
-        	<div class='span-3'>
-        		<h4>Summary Stat 1:</h4>
+        	<div class='span-7'>
+        		<h4>Number of Msats Matching Query:</h4>
         	</div>
-        	<div class= 'span-9 last'>
-        		<h4 id='stat1'>result value</h4>
+        	<div class= 'span-5 last'>
+        		<h4 id='numb_msats'>NA</h4>
         	</div>
-        	
-        	<div class='span-3' >
-        		<h4>Summary Stat 2:</h4>
-        	</div>
-        	
-        	<div class= 'span-9 last'>
-        		<h4 id='stat2'>result value</h4>
-        	</div>
-        	
-        
+        	        
         	<div class= 'span-8 last' id='total_msats'></div>
-        	<div class='span-12 last' id = 'test_result'>
-
-        	</div>
+        	<div class='span-12 last' id ='test_result'></div>
         	
         </div>
         
@@ -151,7 +141,7 @@
                 CSS from <a href="http://www.blueprintcss.org/">Blueprint.css</a>.
             </div>
 
-            <div class="span-4 last">
+            <div class="span-4 align-right last">
                 <a href="http://flask.pocoo.org/"><img
                     src="http://flask.pocoo.org/static/badges/powered-by-flask-s.png"
                     alt="powered by Flask"
