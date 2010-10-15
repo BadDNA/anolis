@@ -4,6 +4,9 @@ from flaskext.wtf import Form, TextField, BooleanField, SelectField, SubmitField
 from anolis_app.database import db_session
 from anolis_app.models import Msats, Sequence, Combined, Primers
 
+import locale # used for formatting numbers with commas
+locale.setlocale(locale.LC_ALL, "")
+print locale.format('%d', 12345, True)
 
 app.config.update(
     DEBUG=True,
@@ -126,14 +129,13 @@ def run_query(msat_motif, msat_motif_size, msat_motif_count, combine_loci, desig
 	
 	# get and return data
 
-	if query != '':
-		
+	if query != 'db_session.query(Msats)':
 		count_rows = query + '.count()'
 		row_count = eval(count_rows)
 		#query += '.all()'
 		return row_count
 	else:
-		return 0
+		return 'No Query'
 
 @app.route('/query_args')
 def add_numbers():
@@ -148,7 +150,7 @@ def add_numbers():
   	  	
   	# run query
   	numb_msats = run_query(msat_motif, msat_motif_size, msat_motif_count, combine_loci, design_primers, tag_primers)
-  	
+  	  	
 	return jsonify(numb_msats = numb_msats, msat_motif_count=msat_motif_count)
 
 

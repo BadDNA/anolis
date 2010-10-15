@@ -25,6 +25,7 @@
 	<script type=text/javascript>
 		$(function() {
 		    $('.button').bind('click', function() {
+		    $("#numb_msats").empty().html("<img src={{url_for('static', filename = 'images/ajax-loader.gif')}}>");
 		        $.getJSON($SCRIPT_ROOT + '/query_args?' + $(this).closest('form').serialize(), function(data) {
 		            $("#numb_msats").text(data.numb_msats), $("#stat2").text(data.msat_motif_count);
 		        });
@@ -59,21 +60,21 @@
         <form action method="GET" class="span-11 inline">
             <fieldset>
             
-            <div class='span-5 '>
+            <div class='span-5' style="text-align:right">
             {{form.msat_motif_size.label}}
             </div>
             <div class='span-5 last'>
             {{form.msat_motif_size}}
             </div>
             
-            <div class='span-5'>
+            <div class='span-5'style="text-align:right">
             {{form.msat_motif.label}}
             </div>
             <div class='span-5 last'>
             {{form.msat_motif}}
             </div>
             
-            <div class='span-5'>
+            <div class='span-5'style="text-align:right">
             {{form.msat_motif_count.label}}
             </div>
             <div class='span-5 last'>
@@ -81,21 +82,21 @@
             </div>
             
             
-            <div class='span-5'>
+            <div class='span-5' style="text-align:right">
             {{form.combine_loci.label}}
             </div>
             <div class='span-5 last'>
             {{form.combine_loci}}
             </div>
             
-            <div class='span-5'>
+            <div class='span-5' style="text-align:right">
             {{form.design_primers.label}}
             </div>
             <div class='span-5 last'>
             {{form.design_primers}}
             </div>
             
-            <div class='span-5'>
+            <div class='span-5' style="text-align:right">
             {{form.tag_primers.label}}
             </div>
             <div class='span-5 last'>
@@ -120,7 +121,7 @@
         		<h4>Number of Msats Matching Query:</h4>
         	</div>
         	<div class= 'span-5 last'>
-        		<h4 id='numb_msats'>NA</h4>
+        		<h4 id='numb_msats'></h4>
         	</div>
         	        
         	<div class= 'span-8 last' id='total_msats'></div>
@@ -141,7 +142,7 @@
                 CSS from <a href="http://www.blueprintcss.org/">Blueprint.css</a>.
             </div>
 
-            <div class="span-4 align-right last">
+            <div class="span-4 last" style="text-align:right">
                 <a href="http://flask.pocoo.org/"><img
                     src="http://flask.pocoo.org/static/badges/powered-by-flask-s.png"
                     alt="powered by Flask"
