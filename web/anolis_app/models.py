@@ -5,7 +5,7 @@ from sqlalchemy import Column, INTEGER, TEXT, FLOAT, ForeignKey
 from anolis_app.database import Base
 
 class Msats(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'msats'
     sequence_id = Column(u'sequence_id', INTEGER(), ForeignKey(u'sequence.id'),\
                             primary_key=True, nullable=False)
     id = Column(u'id', INTEGER(), primary_key=True, nullable=False)
@@ -70,7 +70,7 @@ class Combined(Base):
     def __repr__(self):
         return '<Combined %s>' % (self.id)
 
-class Primers2(Base):
+class Primers(Base):
     __tablename__ = 'primers2'
     id = Column(u'id', INTEGER(), primary_key=True, nullable=False)
     sequence_id = Column(u'sequence_id', INTEGER(), ForeignKey(u'combined.sequence_id'), nullable=False)
