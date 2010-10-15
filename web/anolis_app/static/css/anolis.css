@@ -1,0 +1,13 @@
+.align-right {
+    position: absolute;
+    right: 0;
+}
+
+.vertical-middle {
+    position: absolute;
+    top: 50%;
+}
+
+.container {
+    position: relative;
+}
