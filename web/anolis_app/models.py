@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 from sqlalchemy import Column, INTEGER, TEXT, FLOAT, ForeignKey
+from sqlalchemy.orm import relationship, backref
 from anolis_app.database import Base
 
 class Msats(Base):
@@ -16,6 +17,7 @@ class Msats(Base):
     preceding = Column(u'preceding', INTEGER())
     following = Column(u'following', INTEGER())
     motif_count = Column(u'motif_count', INTEGER())
+    
     
     def __init__(self, sequence_id=None, id=None, motif=None, start=None, \
                 end=None, preceding=None, following=None, motif_count=None):
@@ -36,7 +38,9 @@ class Sequence(Base):
     id = Column(u'id', INTEGER(), primary_key=True)
     name = Column(u'name', TEXT(length=None, convert_unicode=False,\
                     assert_unicode=None, unicode_error=None, _warn_on_bytestring=False))
-
+    
+    msat = relationship(Msats, order_by=Msats.sequence_id, backref='msats')
+	
     def __init__(self, id=None, name=None):
         self.id = id
         self.name = name

@@ -1,12 +1,7 @@
 from anolis_app import app
 from flask import Flask, request, flash, redirect, url_for, render_template, jsonify
 from flaskext.wtf import Form, TextField, BooleanField, SelectField, SubmitField, IntegerField, validators
-from anolis_app.database import db_session
-from anolis_app.models import Msats, Sequence, Combined, Primers
-
-import locale # used for formatting numbers with commas
-locale.setlocale(locale.LC_ALL, "")
-print locale.format('%d', 12345, True)
+from anolis_app.queries import run_query
 
 app.config.update(
     DEBUG=True,
@@ -97,45 +92,6 @@ class MyForm(Form):
     pigtail_primers = BooleanField(label=u'Pigtail Primers')
     # submit = SubmitField()
 
-
-def run_query(msat_motif, msat_motif_size, msat_motif_count, combine_loci, design_primers, tag_primers):
-	"""Take the args from the webpage and submit to the database
-	
-		I'm not a big fan of composing the python expression as a string and then evaling,
-		at the end, but it still beats writing raw SQL.
-	"""
-	
-	query = 'db_session.query(Msats)'
-	
-	# filter on motif
-	if msat_motif != 'None':
-		query += '.filter(Msats.motif == msat_motif)'
-			
-	# filter on motif size
-	if msat_motif_size > 0:
-		query += ".filter('length(motif) == :msat_motif_size').params(msat_motif_size = msat_motif_size)"
-		
-	# filter on length (motif count)
-	if msat_motif_count > 0: # need to determine minimun size in db
-		query += '.filter(Msats.motif_count == msat_motif_count)'
-		
-	# filter on 'perfect'
-	
-	# filter on 'combined'
-	
-	# filter on primers
-	
-	# filter on tag
-	
-	# get and return data
-
-	if query != 'db_session.query(Msats)':
-		count_rows = query + '.count()'
-		row_count = eval(count_rows)
-		#query += '.all()'
-		return row_count
-	else:
-		return 'No Query'
 
 @app.route('/query_args')
 def add_numbers():
