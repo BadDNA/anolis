@@ -14,7 +14,7 @@ class MyForm(Form):
 	# Hard coded because the query is slow, but could add a 'unique' table to the db in the furture
 	# to remove clutter from this page
 	
-    msat_motif = SelectField(label=u'Msat Motif:', \
+    msat_motif = SelectField(label=u'Microsatellite Motif Sequence:', \
                         choices=[('None', 'None'), (u'AAAAAC',u'AAAAAC'),(u'AAAAAG', u'AAAAAG'), (u'AAAAAT',  u'AAAAAT'),  (u'AAAAC',   u'AAAAC'),\
                         (u'AAAACC', u'AAAACC'), (u'AAAACT', u'AAAACT'),  (u'AAAAG', u'AAAAG'), (u'AAAAGG', u'AAAAGG'), (u'AAAAT',\
                         u'AAAAT'), (u'AAAATG',  u'AAAATG'), (u'AAAC',  u'AAAC'), (u'AAACAC', u'AAACAC'),  (u'AAACAG', u'AAACAG'),\
@@ -77,13 +77,13 @@ class MyForm(Form):
                         (u'CCCCG', u'CCCCG'),  (u'CCCG', u'CCCG'),  (u'CCCGG', u'CCCGG'),  (u'CCG', u'CCG'),  (u'CCGG', u'CCGG'),\
                         (u'CG', u'CG')])
 
-    msat_motif_size = SelectField(label=u'Msat Motif Size:',\
+    msat_motif_size = SelectField(label=u'Microsatellite Motif Size:',\
                         choices=[('None', 'None'), (2, 'Di'), (3, 'Tri'), (4, 'Tetra'), 
                         (5, 'Penta'), (6,'Hexa')])
-    msat_motif_count  = IntegerField(label=u'Msat Motif Count:')
+    msat_motif_count  = IntegerField(label=u'Microsatellite Motif Count:')
     output_type = SelectField(label=u'Output Format:',\
                         choices=[('csv','Comma Delimited'),('tab','Tab Delimited')])
-    msat_perfect = BooleanField(label=u'Perfect Msats:')
+    msat_perfect = BooleanField(label=u'Perfect Microsatellites:')
     combine_loci = BooleanField(label=u'Combine Microsatellites:')
     design_primers = BooleanField(label=u'Design Primers:')
     tag_primers = SelectField(label=u'Tag Primers:',\
@@ -105,9 +105,9 @@ def add_numbers():
   	tag_primers = request.args.get('tag_primers', None, type=str)
   	  	
   	# run query
-  	numb_msats = run_query(msat_motif, msat_motif_size, msat_motif_count, combine_loci, design_primers, tag_primers)
+  	query_results = run_query(msat_motif, msat_motif_size, msat_motif_count, combine_loci, design_primers, tag_primers)
   	  	
-	return jsonify(numb_msats = numb_msats, msat_motif_count=msat_motif_count)
+	return jsonify(numb_msats = query_results['total_msats'], msat_motif_count=msat_motif_count)
 
 
 @app.route("/")

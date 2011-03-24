@@ -10,6 +10,7 @@
 	
     <!-- blue print pluggins -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/plugins/fancy-type/screen.css')}}" type="text/css" media="screen, projection" /> 
+    
     <link rel="stylesheet" href="{{url_for('static', filename='css/anolis.css')}}" type="text/css" media="screen, projection" /> 
     
     <!-- scripts -->
@@ -35,19 +36,19 @@
 	</script>
     
 
-	<title>Anole MSats</title>
+	<title>Anole Microsatellites  </title>
     
 </head>
 <body>
     <div class="container">
         <div class="span-24 last"></div>
         <hr />
-        <div id="header" class="span-13"> <h1>Anolis Microsatellites Database</h1></div>
-        <div class="span-11 last"></dir><img src={{url_for('static', filename='images/mini_anocar_face-left.gif')}}></div>
+        <div id="header" class="span-16"> <h1>Anolis Microsatellites Database, v0.1</h1></div>
+        <div class="span-8 last"></dir><img src={{url_for('static', filename='images/mini_anocar_face-left.gif')}}></div>
         <hr />
         
         <div id="subheader" class="span-24 last">
-        <h3 class="alt">A searchable database of 650,694 Anolis carolinensis microsatellites <strong>(version 0.1)</strong></h3>
+        <h3 class="alt">A searchable database of 650,694 Anolis carolinensis microsatellites from genome build AnoCar2</h3>
         </div>
 
         <hr />
@@ -81,13 +82,12 @@
             {{form.msat_motif_count(class='text', size=3, maxlength=3, style='width:48px')}}
             </div>
             
-            
-            <div class='span-5' style="text-align:right">
+            <!-- <div class='span-5' style="text-align:right">
             {{form.combine_loci.label}}
             </div>
             <div class='span-5 last'>
             {{form.combine_loci}}
-            </div>
+            </div> -->
             
             <div class='span-5' style="text-align:right">
             {{form.design_primers.label}}
@@ -99,12 +99,13 @@
             <div class='span-5' style="text-align:right">
             {{form.tag_primers.label}}
             </div>
-            <div class='span-5 last'>
+            <div class='span-5 append-bottom last'>
             {{form.tag_primers}}
             </div>
             
+             <hr />
+            
             <div class='span-5 prepend-5 last'>
-            	<!-- <a href=# id=calculate>calculate server side</a> -->
 	        	<button id="submit_msats" name="submit_msats" type="submit" value="submit_msats" class="button positive">
 					<img src="{{url_for('static', filename = 'css/plugins/buttons/icons/tick.png')}}" alt=""/> Submit
 				</button>
@@ -112,16 +113,63 @@
             </fieldset>
         </form>        
         </div>
-        <div class='span-12 last'>
+        <div class='span-12  last'>
         	<div class='span-12 last'>
         		<h3>Search Results:</h3>
         	</div>
         	
-        	<div class='span-7'>
-        		<h4>Number of Msats Matching Query:</h4>
-        	</div>
-        	<div class= 'span-5 last'>
-        		<h4 id='numb_msats'>--</h4>
+        	<div class="span-11 databox last">
+        	
+	        	<div class='span-6 result_label'>
+	        		<div>Total Microsatellites:</div>
+	        	</div>
+	        	<div class= 'span-5 last'>
+	        		<div id='numb_msats' class='result_value'>--</div>
+	        	</div>
+	        	
+	        	<div class='span-6 result_label'>
+	        		<div>Mean Number of Repeats:</div>
+	        	</div>
+	        	<div class= 'span-5 append-bottom last'>
+	        		<div id='mean_repeats' class='result_value'>-- , +/- # Stdev.</div>
+	        	</div>
+	
+	 			<hr />
+	
+	        	<div class='span-6' style="text-align:right;font-weight:bold;">
+	        		<div>Motif Counts:</div>
+	        	</div>
+	        	<div class= 'span-5 last'>
+	        		<div id='place filler' class='result_value'></div>
+	        	</div>
+	        	
+	        	<div class='span-6 result_label'>
+	        		<div>Dis:</div>
+	        	</div>
+	        	<div class= 'span-4 last'>
+	        		<div id='di_count' class='result_value'>--</div>
+	        	</div>        	
+	
+				<div class='span-6 result_label'>
+	        		<div>Tris:</div>
+	        	</div>
+	        	<div class= 'span-4 last'>
+	        		<div id='tri_count' class='result_value'>--</div>
+	        	</div>  
+	
+				<div class='span-6 result_label'>
+	        		<div>Tetras:</div>
+	        	</div>
+	        	<div class= 'span-4 last'>
+	        		<div id='tetra_count'  class='result_value'>--</div>
+	        	</div>        	
+	
+				<div class='span-6 result_label'>
+	        		<div>Pentas:</div>
+	        	</div>
+	        	<div class= 'span-4 last'>
+	        		<div id='penta_count' class='result_value'>--</div>
+	        	</div>  
         	</div>
         	        
         	<div class= 'span-8 last' id='total_msats'></div>

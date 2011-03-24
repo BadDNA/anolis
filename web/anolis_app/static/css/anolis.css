@@ -11,3 +11,22 @@
 .container {
     position: relative;
 }
+
+.databox {
+	padding:1.4em;
+	margin:0 0 1.5em 0;
+	border:1px solid #ccc;
+
+}
+
+.result_label {
+	line-height:3;
+	font-weight:bold;
+	font-size:12px;
+	text-align:right;
+}
+
+.result_value {
+	line-height:3;
+	font-size:12px;
+}
